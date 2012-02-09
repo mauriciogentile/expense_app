@@ -1,0 +1,152 @@
+.ui-footer-fixed {
+    bottom: 0px;
+    position: absolute !important;
+    height:50px !important; 
+}
+
+.ui-loader-default {
+    top: 0px !important;
+}
+
+.ui-title {
+    color: #ff0000;
+}
+/*
+.ui-page {
+    background: transparent url('/css/images/background.gif');
+}
+*/
+.ui-li {
+    background-color: transparent;
+    height:40px;
+}
+
+h1, h2, h3 { 
+    margin: 0px; padding: 0px;
+}
+
+label.error {
+    color: red;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.4;
+    margin-top: 0.5em;
+    width: 100%;
+    float: none;
+}
+
+@media screen and (orientation: portrait){
+    label.error { margin-left: 0; display: block; }
+}
+
+@media screen and (orientation: landscape){
+    label.error { display: inline-block; margin-left: 22%; }
+}
+
+.ui-footer-fixed {
+    bottom: 0px;
+    position: absolute;
+}
+
+.form-header {
+    margin-top:2px;
+    margin-left: 60px;
+}
+
+a.ui-link-inherit-b {
+    /*padding-left: 35px !important;
+    margin-left: 20px !important;*/
+}
+
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
+  padding-left: 55px !important;
+}
+
+.ui-content-list {
+    width:600px !important;
+}
+
+.ui-li-icon {
+    float: left;
+    margin-top: 10px;
+    max-height: 50px;
+    max-width: 50px;
+    background-color: rgb(27,161,226);
+}
+
+.ui-li-icon-transparent {
+    background-color: transparent;
+    margin-top: 0px;
+}
+
+.ui-li-icon-single {
+    float: left;
+    max-height: 50px;
+    max-width: 50px;
+    background-color: rgb(27,161,226);
+}
+
+h6.ui-li-heading {
+}
+
+.ui-listview li {
+    height: 60px !important;
+}
+
+h6 {
+    color: grey;
+}
+
+legend {
+    color: red;
+}
+
+img, input, select, IMG, INPUT, SELECT, .ui-select, .ui-btn{
+    -moz-border-radius: 2px !important;
+    border-radius: 2px !important;
+}
+
+/*
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
+    min-height: 20px;
+    padding-left: 60px;
+}
+
+.ui-field-contain input.ui-input-text, .ui-field-contain textarea.ui-input-text, .ui-field-contain .ui-input-search {
+	padding-bottom: 10px;
+}
+
+.ui-page {
+    background: transparent url('/css/images/background.gif');
+}
+
+.toolbar {
+    background-color: black;
+    bottom: 0;
+    color: #FFFFFF;
+    height: 48px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 100;
+	left:0px;
+	bottom:0px;
+	width:100%;
+}
+
+.toolbar-item {
+    display: inline-block;
+    height: 48px;
+    margin-left: 15px;
+    margin-right: 12px;
+    width: 48px;
+}
+
+header, footer {
+    display: block;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section {
+    display: block;
+}
+*/

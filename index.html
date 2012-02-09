@@ -1,0 +1,187 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--<meta name="viewport" content="width:200px; overflow:scroll">-->
+		<meta http-equiv="X-UA-Compatible" content="IE=8" />
+		<title>avenade - expense app</title>
+
+		<link rel="stylesheet" href="css/themes/metro/jquery.mobile.metro.theme.css" />
+		<link href="css/jquery.mobile.fixedToolbar.polyfill.css" rel="stylesheet" type="text/css" />
+		<link href="css/custom.css" rel="stylesheet" type="text/css" />
+		
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile.js"></script>
+		<script type="text/javascript" src="js/jquery.tmpl.js"></script>
+		<script type="text/javascript" src="js/date.js"></script>
+		<script type="text/javascript" src="css/themes/metro/jquery.mobile.metro.theme.init.js"></script>
+		<script type="text/javascript" src="js/debug/kido/kido.js"></script>
+		<script type="text/javascript" src="js/debug/kido/kido.storage.js"></script>
+		<script type="text/javascript" src="js/debug/kido/kido.logging.js"></script>
+		<script type="text/javascript" src="js/debug/kido/kido.config.js"></script>
+		<script type="text/javascript" src="js/debug/kido/kido.email.js"></script>
+		<script type="text/javascript" src="js/debug/view.js"></script>
+		<script type="text/javascript" src="js/debug/viewController.js"></script>
+		<script type="text/javascript" src="js/debug/expenses.storage.js"></script>
+
+		<script id="lookupTemplate" type="text/x-jquery-tmpl">
+		    <option value=${Code}${key}>${Description}${value}</option>
+		</script>
+		<script id="listTemplate" type="text/x-jquery-tmpl">
+		    <li id=${_id}>
+		    	<a>${Description}</a>
+		    </li>
+		</script>
+		<script id="timeReportsTemplate" type="text/x-jquery-tmpl">
+		    <li id=${_id}>
+		    	<a>
+		    		<img src="images/icons/calendar.png" class="ui-li-icon"></img>${dateFormat(EndDate,dateFormat.masks.us)}
+		    		<h6>${dateFormat(StartDate,dateFormat.masks.us)} - ${dateFormat(EndDate,dateFormat.masks.us)}</h6>
+		    	</a>
+		    </li>
+		</script>
+		<script id="expenseTypesTemplate" type="text/x-jquery-tmpl">
+		    <li id=${_id}>
+		    	<a class="ui-link-inherit-b"><img src="${Icon}" class="ui-li-icon-single"></img>${Description}</a>
+		    </li>
+		</script>
+		<script id="expensesTemplate" type="text/x-jquery-tmpl">
+		    <li id="${_id}" expenseTypeId="${ExpenseTypeId}">
+		    	<a>
+		    		<img class="ui-li-icon ui-li-icon-transparent"></img>${ExpenseTypeDescription}
+		    		<h6>${TotalAmount}</h6>
+		    	</a>
+		    </li>
+		</script>
+		<script id="quickExpenseTypesTemplate" type="text/x-jquery-tmpl">
+			<a expenseTypeId="${_id}" href="#" style="color:rgb(27,161,226) !important;" data-role="button" data-inline="true" ><img src="${Icon}" class="ui-li-icon ui-li-icon-transparent"></img>${Description}</a>
+		</script>
+	</head>
+	<body data-theme="a">
+		<div id="loginPage" data-role="page" data-theme="a" >
+			<div data-role="header">
+				<h1>expense reports</h1>
+			</div>
+			<div data-role="content" >
+				<legend>welcome!</legend>
+				<form id="frmLogin">
+					<div data-role="fieldcontain">
+						<label for="username" >username</label>
+						<input id="username" placeholder="" value="mauri" type="text" ></input>
+					</div>
+					<div data-role="fieldcontain">
+						<label for="password" >password</label>
+						<input id="password" placeholder="" value="" type="password" ></input>
+					</div>
+					<div data-role="fieldcontain">
+						<label for="switch-a">remember me:</label>
+						<select name="switch-a" id="switch-a" data-role="slider">
+							<option value="off">Off</option>
+							<option value="on">On</option>
+						</select> 
+		    		</div>
+					<a id="btnSignIn" href="#" data-role="button" data-icon="check" data-iconpos="left" >sign in</a>
+				</form>
+			</div>
+		</div>
+		<div id="expenseTypesPage" data-role="page" data-theme="a" >
+		    <div data-role="header">
+		        <h1>expense types</h1>
+		    </div>
+		    <div class="ui-content-list" data-role="content" >
+				<ul id="expenseTypeList" data-role="listview" data-inset="true" >
+				</ul>
+			</div>
+			<div data-role="footer" data-position="fixed" data-theme="a">		
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#" data-icon="home" class="ui-btn-active"></a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div><!-- /footer -->
+		</div>
+	    <div id="homePage" data-role="page" data-theme="a">
+		    <div data-role="header">
+		        <h1>time + expenses</h1>
+		    </div>
+		    <div id="quickExpenseTypes" data-role="content" >
+			</div>
+		    <div data-role="content" >
+		    	<a id="btnShowExpenseTypes" href="#" data-role="button" data-icon="plus" data-iconpos="left" >add other</a>
+		    	<a id="btnShowTimeReports" href="#" data-role="button" data-icon="search" data-iconpos="left" >periods</a>
+			</div>
+		</div>
+	    <div id="timeReportsPage" data-role="page" data-theme="a">
+		    <div data-role="header">
+		        <h1>time reports</h1>
+		    </div>
+		    <div data-role="content" >
+				<ul id="timeReports" data-role="listview" data-inset="true">
+				</ul>
+			</div>
+			<div data-role="footer" data-position="fixed" data-theme="a">		
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#" data-icon="home" class="ui-btn-active"></a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div><!-- /footer -->
+		</div>
+		<div id="expensesPage" data-role="page" data-theme="a">
+		    <div data-role="header">
+		        <h1 id="timeReportTitle"></h1>
+		        <span id="timeReportStatus"></span>
+		    </div>
+		    <div class="ui-content-list" data-role="content" >
+				<ul id="expenses" data-role="listview" data-filter="true" data-inset="true" >
+				</ul>
+			</div>
+			<a id="btnCloseTimeReport" href="#" data-role="button" data-icon="check" data-iconpos="left">close time report</a>
+			<div data-role="footer" data-position="fixed" data-theme="a">		
+				<div data-role="navbar">
+					<ul>
+						<li><a id="btnAddExpense" href="#" data-icon="plus" class="ui-btn-active"></a></li>
+						<li><a href="#" data-icon="home" class="ui-btn-active"></a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div><!-- /footer -->
+		</div>
+		<div id="expenseFormPage" data-role="page" data-theme="a">
+		    <div data-role="content" >
+				<img id="expenseFormImage" class="ui-li-icon">
+				<h3 class="form-header" id="expenseFormTitle"></h3>
+			</div>
+			<form id="frmRegister">
+				<div data-role="content" >
+					<legend>summary</legend>
+				    <div data-role="fieldcontain">
+				    	<input id="expenseId" placeholder="" value="" type="hidden"></input>
+				    	<label for="expenseDate" >date</label>
+				        <input name="expenseDate" id="expenseDate" type="date" data-role="datebox"></input>
+				        <label for="expenseProject" >project</label>
+				        <select id="expenseProject"></select>
+				        <label for="expenseAmount">amount</label>
+						<input id="expenseAmount" placeholder="" value="" type="number"></input>
+					</div>
+					<legend>detail</legend>
+					<div id="dynamic" data-role="fieldcontain">
+					</div>
+				</div>
+			</form>
+			<a id="btnSaveExpense" href="#" data-role="button" data-icon="check" data-iconpos="left">save</a>
+			<div data-role="footer" data-position="fixed" data-theme="a">		
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#" data-icon="delete"></a></li>
+						<li><a href="#" data-icon="back" class="ui-btn-active"></a></li>
+					</ul>
+				</div><!-- /navbar -->
+			</div><!-- /footer -->
+        </div>
+		<script type="text/javascript">
+			var view = new View();
+			var controller = new ViewController(view);
+			controller.init();
+		</script>
+	</body>
+</html>
